@@ -1,0 +1,5 @@
+﻿Icon.png https://pixabay.com/en/post-it-note-memo-paper-1495148/
+Iconhdpi.png https://pixabay.com/en/post-it-note-memo-paper-1495148/
+Iconxhdpi.png https://pixabay.com/en/post-it-note-memo-paper-1495148/
+Iconxxhdpi.png https://pixabay.com/en/post-it-note-memo-paper-1495148/
+searchio30n.png https://pixabay.com/en/magnifier-glass-icon-nero-vector-1093184/
