@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1">
+        <Button
+            android:text="Accept"
+            android:layout_width="125dp"
+            android:layout_height="match_parent"
+            android:id="@+id/btnEditE" />
+        <Button
+            android:text="Remove"
+            android:layout_width="125dp"
+            android:layout_height="match_parent"
+            android:id="@+id/btnDeleteE" />
+        <Button
+            android:text="Exit"
+            android:layout_width="125dp"
+            android:layout_height="match_parent"
+            android:id="@+id/btnExitE" />
+    </LinearLayout>
+    <TextView
+        android:text="Title"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTitleE" />
+    <TextView
+        android:text="Content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2" />
+    <EditText
+        android:inputType="textMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtContentE" />
+</LinearLayout>

@@ -1,0 +1,12 @@
+assi1.AddingPage, assi1;md50283518028412dcb070223bc2ca7c69f.AddingPage
+assi1.AddingPage, assi1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md50283518028412dcb070223bc2ca7c69f.AddingPage
+assi1.AddingPage;md50283518028412dcb070223bc2ca7c69f.AddingPage
+assi1.AddingPage;md50283518028412dcb070223bc2ca7c69f.AddingPage
+assi1.EdtingPage, assi1;md50283518028412dcb070223bc2ca7c69f.EdtingPage
+assi1.EdtingPage, assi1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md50283518028412dcb070223bc2ca7c69f.EdtingPage
+assi1.EdtingPage;md50283518028412dcb070223bc2ca7c69f.EdtingPage
+assi1.EdtingPage;md50283518028412dcb070223bc2ca7c69f.EdtingPage
+assi1.MainActivity, assi1;md50283518028412dcb070223bc2ca7c69f.MainActivity
+assi1.MainActivity, assi1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md50283518028412dcb070223bc2ca7c69f.MainActivity
+assi1.MainActivity;md50283518028412dcb070223bc2ca7c69f.MainActivity
+assi1.MainActivity;md50283518028412dcb070223bc2ca7c69f.MainActivity

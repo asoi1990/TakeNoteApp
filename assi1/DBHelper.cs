@@ -1,0 +1,219 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
+using Android.Database.Sqlite;
+using System.IO;
+
+//http://www.itexico.com/blog/bid/97885/How-to-Create-a-Database-Mobile-App-with-SQLite-and-Xamarin-Studio 
+
+namespace assi1
+{
+    public class DBHelper
+    {
+        //SQLiteDatabase object for database handling
+        private SQLiteDatabase sqldb;
+        //String for Query handling
+        private string sqldb_query;
+        //String for Message handling
+        private string sqldb_message;
+        //Bool to check for database availability
+        private bool sqldb_available;
+        //Zero argument constructor, initializes a new instance of Database class
+        public DBHelper()
+        {
+            sqldb_message = "";
+            sqldb_available = false;
+        }
+        //One argument constructor, initializes a new instance of Database class with database name parameter
+        public DBHelper(string sqldb_name)
+        {
+            try
+            {
+                sqldb_message = "";
+                sqldb_available = false;
+                CreateDatabase(sqldb_name);
+            }
+            catch (SQLiteException ex)
+            {
+                sqldb_message = ex.Message;
+            }
+        }
+        //Gets or sets value depending on database availability
+        public bool DatabaseAvailable
+        {
+            get { return sqldb_available; }
+            set { sqldb_available = value; }
+        }
+        //Gets or sets the value for message handling
+        public string Message
+        {
+            get { return sqldb_message; }
+            set { sqldb_message = value; }
+        }
+        //Creates a new database which name is given by the parameter
+        public void CreateDatabase(string sqldb_name)
+        {
+            try
+            {
+                sqldb_message = "";
+                string sqldb_location = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                string sqldb_path = Path.Combine(sqldb_location, sqldb_name);
+                bool sqldb_exists = File.Exists(sqldb_path);
+                if (!sqldb_exists)
+                {
+                    sqldb = SQLiteDatabase.OpenOrCreateDatabase(sqldb_path, null);
+                    sqldb_query = @"CREATE TABLE IF NOT EXISTS Notes (
+                            _id              INTEGER PRIMARY KEY,
+                            TitleNote       text NOT NULL,
+                            ContentNote       text ,
+                            DateCreate        Date  DEFAULT CURRENT_DATE
+                            )";
+                    sqldb.ExecSQL(sqldb_query);
+                    sqldb_message = "Database: " + sqldb_name + " created";
+                }
+                else
+                {
+                    sqldb = SQLiteDatabase.OpenDatabase(sqldb_path, null, DatabaseOpenFlags.OpenReadwrite);
+                    sqldb_message = "Database: " + sqldb_name + " opened";
+                }
+                sqldb_available = true;
+            }
+            catch (SQLiteException ex)
+            {
+                sqldb_message = ex.Message;
+            }
+        }
+        //Adds a new record with the given parameters
+        public void AddRecord(Note note)
+        {
+            try
+            {
+                sqldb_query = "INSERT INTO Notes (_id,TitleNote, ContentNote) VALUES (" + note.getidN() + ",'" + note.gettitleN() + "','" + note.getcontentN() + "');";
+                sqldb.ExecSQL(sqldb_query);
+                sqldb_message = "Record saved";
+            }
+            catch (SQLiteException ex)
+            {
+                sqldb_message = ex.Message;
+            }
+        }
+        //Updates an existing record with the given parameters depending on id parameter
+        public void UpdateRecord(Note note)
+        {
+            try
+            {
+                sqldb_query = "UPDATE Notes SET TitleNote ='" + note.gettitleN() + "', ContentNote ='" + note.getcontentN() + "' WHERE _id =" + note.getidN() + ";";
+                sqldb.ExecSQL(sqldb_query);
+                sqldb_message = "Record " + note.getidN() + " updated";
+            }
+            catch (SQLiteException ex)
+            {
+                sqldb_message = ex.Message;
+            }
+        }
+        //Deletes the record associated to id parameter
+        public void DeleteRecord(int idN)
+        {
+            try
+            {
+                sqldb_query = "DELETE FROM Notes WHERE _id =" + idN + ";";
+                sqldb.ExecSQL(sqldb_query);
+                sqldb_message = "Record " + idN + " deleted";
+            }
+            catch (SQLiteException ex)
+            {
+                sqldb_message = ex.Message;
+            }
+        }
+        //Searches a record and returns an Android.Database.ICursor cursor
+        //Shows all the records from the table
+        public Android.Database.ICursor GetRecordCursor()
+        {
+            Android.Database.ICursor sqldb_cursor = null;
+            try
+            {
+                sqldb_query = "SELECT _id,titlenote FROM notes;";
+                sqldb_cursor = sqldb.RawQuery(sqldb_query, null);
+                if (!(sqldb_cursor != null))
+                {
+                    sqldb_message = "Record not found";
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                sqldb_message = ex.Message;
+            }
+            return sqldb_cursor;
+        }
+        //Searches a record and returns an Android.Database.ICursor cursor
+        //Shows records according to search criteria
+        public Android.Database.ICursor GetRecordCursor(string sColumn, string sValue)
+        {
+            Android.Database.ICursor sqldb_cursor = null;
+            try
+            {
+                sqldb_query = "SELECT _id,titlenote FROM notes WHERE " + sColumn + " LIKE '%" + sValue + "%';";
+                sqldb_cursor = sqldb.RawQuery(sqldb_query, null);
+                if (!(sqldb_cursor != null))
+                {
+                    sqldb_message = "Record not found";
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                sqldb_message = ex.Message;
+            }
+            return sqldb_cursor;
+        }
+
+        public Android.Database.ICursor getLastID()
+        {
+
+            Android.Database.ICursor sqldb_cursor = null;
+            try
+            {
+            sqldb_query = "SELECT max(_id) from notes";
+            sqldb_cursor = sqldb.RawQuery(sqldb_query, null);
+            if (!(sqldb_cursor != null))
+            {
+                sqldb_message = "Record not found";
+            }
+            }
+            catch (SQLiteException ex)
+            {
+                sqldb_message = ex.Message;
+            }
+            return sqldb_cursor;
+
+
+        }
+
+        //Shows the records from the table by id
+        public Android.Database.ICursor GetRecordCursorByID(int id)
+        {
+            Android.Database.ICursor sqldb_cursor = null;
+            try
+            {
+                sqldb_query = "SELECT _id,titlenote,ContentNote FROM notes where _id=" + id.ToString();
+                sqldb_cursor = sqldb.RawQuery(sqldb_query, null);
+                if (!(sqldb_cursor != null))
+                {
+                    sqldb_message = "Record not found";
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                sqldb_message = ex.Message;
+            }
+            return sqldb_cursor;
+        }
+    }
+}
