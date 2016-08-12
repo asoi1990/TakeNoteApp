@@ -10,6 +10,8 @@ namespace assi1
 {
 
     // icon https://pixabay.com/en/post-it-note-memo-paper-1495148/
+    // search https://pixabay.com/en/magnifier-glass-icon-nero-vector-1093184/
+
 
     [Activity(Label = "TakeNote", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity

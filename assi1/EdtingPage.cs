@@ -72,7 +72,7 @@ namespace assi1
         public void RemoveRecord(int id)
         {
             var builder = new AlertDialog.Builder(this);
-            builder.SetMessage("Do you want to exit?");
+            builder.SetMessage("Do you want to remove "+txtTitleE.Text+" ?");
             builder.SetPositiveButton("Yes", (s, e) =>
             {
                 sqldb.DeleteRecord(id);
@@ -80,13 +80,16 @@ namespace assi1
                 Toast toast = Toast.MakeText(this, "Success", ToastLength.Short);
                 toast.Show();
 
-                ExitClick();
+                var MainPage = new Intent(this, typeof(MainActivity));
+
+                StartActivity(MainPage);
+                Finish();
             });
             builder.SetNegativeButton("Cancel", (s, e) => { });
             builder.Create().Show();
 
-            
 
+            
 
         }
 
